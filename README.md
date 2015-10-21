@@ -10,3 +10,11 @@ From commandline, call the program with arguments like:
 	
 If <servername_or_ip> is a servername or ip without "http://" specified, it will be surrounded by: "http://{servername_or_ip}:8080/tfs".
 To avoid this automatic surrounding, simply include "http://" in your <servername_or_ip>.
+	
+        private static Uri GetServerUri(string serverName)
+        {
+            if (serverName.Contains("http://"))
+                return new Uri(serverName);
+            return new Uri(string.Format("http://{0}:8080/tfs/", serverName));
+        }
+		
