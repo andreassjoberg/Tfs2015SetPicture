@@ -34,9 +34,11 @@ namespace Tfs2015SetPicture
 
         private static Uri GetServerUri(string serverName)
         {
-            if (serverName.Contains("http://"))
+            if (serverName.StartsWith("http://") || serverName.StartsWith("https://"))
+            {
                 return new Uri(serverName);
-            return new Uri(string.Format("http://{0}:8080/tfs/", serverName));
+            }
+            return new Uri($"http://{serverName}:8080/tfs/");
         }
     }
 }

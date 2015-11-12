@@ -8,27 +8,6 @@ namespace Tfs2015SetPicture
 {
     internal class Program
     {
-        private class Options
-        {
-            [Option('s', "servername", Required = true,
-                HelpText = "Name, or ip, of your TFS server name.")]
-            public string ServerName { get; set; }
-
-            [Option('u', "username", Required = true,
-                HelpText = "Username to set picture for. You must be authorized to set picture for this account.")]
-            public string Username { get; set; }
-
-            [Option('i', "imagepath", Required = true,
-                HelpText = "Path to the image. Desired size is 144x144 pixels, otherwise the image will be resized.")]
-            public string ImagePath { get; set; }
-
-            [HelpOption]
-            public string GetUsage()
-            {
-                return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
-            }
-        }
-
         private static void Main(string[] args)
         {
             var options = new Options();
@@ -51,7 +30,7 @@ namespace Tfs2015SetPicture
             catch (FileNotFoundException)
             {
                 Console.Error.WriteLine("Image could not be found or read. Make sure the path to your image is correct.");
-                Console.Error.WriteLine("Image path: \"{0}\"", options.ImagePath);
+                Console.Error.WriteLine($"Image path: \"{options.ImagePath}\"");
                 Environment.Exit(1);
             }
             catch (Exception e)
@@ -76,6 +55,27 @@ namespace Tfs2015SetPicture
             }
 
             Console.WriteLine("Done!");
+        }
+
+        private class Options
+        {
+            [Option('s', "servername", Required = true,
+                HelpText = "Name, or ip, of your TFS server name.")]
+            public string ServerName { get; set; }
+
+            [Option('u', "username", Required = true,
+                HelpText = "Username to set picture for. You must be authorized to set picture for this account.")]
+            public string Username { get; set; }
+
+            [Option('i', "imagepath", Required = true,
+                HelpText = "Path to the image. Desired size is 144x144 pixels, otherwise the image will be resized.")]
+            public string ImagePath { get; set; }
+
+            [HelpOption]
+            public string GetUsage()
+            {
+                return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
+            }
         }
     }
 }
