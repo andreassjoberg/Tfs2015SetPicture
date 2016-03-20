@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using CommandLine;
-using CommandLine.Text;
 using Microsoft.TeamFoundation;
 
 namespace Tfs2015SetPicture
@@ -10,15 +9,14 @@ namespace Tfs2015SetPicture
     {
         private static void Main(string[] args)
         {
-            var options = new Options();
-            var parser = new Parser(settings =>
-                                    {
-                                        settings.CaseSensitive = true;
-                                        settings.HelpWriter = Console.Error;
-                                    });
-            if (!parser.ParseArgumentsStrict(args, options))
+            var result = Parser.Default.ParseArguments<Options>(args);
+            Options options = null;
+            if (result.MapResult(opt =>
+                                 {
+                                     options = opt;
+                                     return 0;
+                                 }, errors => 1) != 0)
             {
-                Console.WriteLine(options.GetUsage());
                 Environment.Exit(1);
             }
 
@@ -70,12 +68,6 @@ namespace Tfs2015SetPicture
             [Option('i', "imagepath", Required = true,
                 HelpText = "Path to the image. Desired size is 144x144 pixels, otherwise the image will be resized.")]
             public string ImagePath { get; set; }
-
-            [HelpOption]
-            public string GetUsage()
-            {
-                return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
-            }
         }
     }
 }
