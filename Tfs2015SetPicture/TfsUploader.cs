@@ -5,8 +5,14 @@ using Microsoft.TeamFoundation.Framework.Common;
 
 namespace Tfs2015SetPicture
 {
+    /// <summary>
+    ///     Class for uploading image to TFS
+    /// </summary>
     internal static class TfsUploader
     {
+        /// <summary>
+        ///     Uploads an image (from byte array) to a server for a specific user.
+        /// </summary>
         public static void UploadImage(string serverName, string username, byte[] imageBytes)
         {
             var serverUri = GetServerUri(serverName);
@@ -32,6 +38,9 @@ namespace Tfs2015SetPicture
             }
         }
 
+        /// <summary>
+        ///     Formats the uri from the server name.
+        /// </summary>
         private static Uri GetServerUri(string serverName)
         {
             if (serverName.StartsWith("http://") || serverName.StartsWith("https://"))
