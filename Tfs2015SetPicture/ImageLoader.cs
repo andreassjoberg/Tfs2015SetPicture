@@ -5,11 +5,17 @@ using System.IO;
 
 namespace Tfs2015SetPicture
 {
+    /// <summary>
+    ///     Class for image loading.
+    /// </summary>
     internal static class ImageLoader
     {
         private const int TargetWidth = 144;
         private const int TargetHeight = 144;
 
+        /// <summary>
+        ///     Loads an image from path into a byte array.
+        /// </summary>
         public static byte[] LoadImage(string path)
         {
             var image = Image.FromFile(path);
